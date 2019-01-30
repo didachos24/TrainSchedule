@@ -7,6 +7,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Baloo+Thambi|Open+Sans" rel="stylesheet">
     <link rel="stylesheet" type="text/css" media="screen" href="assets/css/style.css" />
+    <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.8.1/firebase.js"></script>
 </head>
 <body>
     <div class="jumbotron head">
@@ -32,7 +34,7 @@
                         <th scope="col">Minutes Away</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="body">
 
                 </tbody>
             </table>
@@ -65,12 +67,12 @@
                     
                             <div class="form-group"  style="text-align: left">
                                 <label for="start">First Train Time(HH:mm - Military time)</label>
-                                <input type="text" class="form-control" id="start">
+                                <input type="time" class="form-control" id="start">
                             </div>
                         
                             <div class="form-group"  style="text-align: left">
-                                <label for="frequency">Frequency</label>
-                                <input type="text" class="form-control" id="frequency">
+                                <label for="frequency">Frequency (min)</label>
+                                <input type="number" class="form-control" id="frequency">
                             </div>
                             
                             <button type="submit" class="btn">Submit</button>
