@@ -4,6 +4,7 @@ var start = "";
 var frequency = "";
 var now;
 var wait;
+var startTime;
 var arrivalTime;
 
 // Initialize Firebase
@@ -18,12 +19,14 @@ messagingSenderId: "749223570873"
 
 firebase.initializeApp(config);
 
+now = moment();
+
+
 var dataRef = firebase.database();
 
 $(".btn").on("click", function(){
     event.preventDefault();
 
-    now = moment();
 
     name = $("#name").val().trim();
     start = $("#start").val().trim();
@@ -44,13 +47,15 @@ $(".btn").on("click", function(){
 
 dataRef.ref().on("child_added", function(snapshot) {
 
+
     var sv = snapshot.val();
 
-    var startTime = moment(sv.start, "HH:mm");
+    startTime = moment(sv.start, "HH:mm");
 
-    var duration = parseFloat(moment.duration(now.diff(startTime)).asMinutes()).toFixed(0);
 
-    var min = duration % frequency;
+    var duration = parseInt(moment.duration(now.diff(startTime)).asMinutes()).toFixed(0);
+
+    var min = duration % sv.frequency;
 
     wait = sv.frequency-min;
 
@@ -58,5 +63,6 @@ dataRef.ref().on("child_added", function(snapshot) {
 
     arrivalTime = now.add(wait, 'minutes').format("HH:mm");
 
-    console.log(startTime);
+    $("#tbody").append("<tr><td>"+sv.name+"</td><td>"+sv.destination+"</td><td>"+sv.frequency+"</td><td>"
+    +arrivalTime+"</td><td>"+wait+"</td></tr>");
 })
